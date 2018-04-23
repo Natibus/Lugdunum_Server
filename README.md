@@ -1,3 +1,8 @@
+## Install the requirements
+```pip install -r requirements.txt```
+## Run server
+```python manage.py runserver```
+> NOTE : be sure that the right python executable is associated with the 'python' command ;)
 ## You can run this server by using a virtualenv.
 ### install virtualenv
 ```sudo easy_install virtualenv```
@@ -9,9 +14,3 @@
 ```source ~/django/bin/activate```
 ### deactivate virtualenv when needed
 ```desactivate```
-
-## Install the requirements
-```pip install -r requirements.txt```
-## Run server
-```python manage.py runserver```
-> NOTE : be sure that the right python executable is associated with the 'python' command ;)
