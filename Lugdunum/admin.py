@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import OldPhoto, RecentPhoto, Place
+
+admin.site.register(OldPhoto)
+admin.site.register(Place)
+admin.site.register(RecentPhoto)
