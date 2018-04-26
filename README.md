@@ -14,3 +14,8 @@
 ```source ~/django/bin/activate```
 ### deactivate virtualenv when needed
 ```desactivate```
+### apply migrations and run server
+```python manage.py migrate```
+```python manage.py runserver```
+
+### URL to photo list : /Lugdunum/photoList
