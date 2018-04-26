@@ -27,11 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['10.43.0.163', 'localhost','dc48daad.ngrok.io']
 
-
+# APPEND_SLASH = False
 # Application definition
 
 INSTALLED_APPS = [
     'Lugdunum.apps.LugdunumConfig',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -125,3 +126,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = 'media/'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
