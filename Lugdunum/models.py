@@ -22,7 +22,7 @@ class OldPhoto(models.Model):
         )
 
 class RecentPhoto(models.Model):
-    image = models.ImageField(blank = True)
+    image = models.ImageField(upload_to = MEDIA_URL, blank = True)
     name = models.TextField(default="default_name")
     format = models.TextField(default="unknown")
     date = models.DateTimeField(blank=True, default=timezone.now())
@@ -35,6 +35,6 @@ class RecentPhoto(models.Model):
         )
 
 class Image(models.Model):
-    image = models.ImageField(blank = True)
+    image = models.ImageField(upload_to = MEDIA_URL, blank = True)
     name = models.TextField(default="default_name")
     format = models.TextField(default="unknown")

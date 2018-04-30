@@ -21,18 +21,23 @@ class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class=ImageSerializer
 
-def photoList(request):
+def photoList(request, id_place):
     if request.method == 'GET':
-        images = OldPhoto.objects.all()
+        images = Place.objects.get(pk=id_place).oldphoto_set.all()
         serializer = OldPhotoSerializer(images, many=True)
         for image in serializer.data:
             try:
-                file_as_b64 = base64.encodestring(open(os.path.join(settings.MEDIA_ROOT, image['image']),'rb').read())
+                image['image'] = image['image'].replace('/media','')
+                file_as_b64 = base64.b64encode(open(os.path.join(settings.MEDIA_ROOT,image['image']),'rb').read())
                 image['file'] = file_as_b64.decode('ascii')
             except:
-                print('Error when reading file.')
+                raise ValueError('Tried to encode base64 string by joining',settings.MEDIA_ROOT, image['image'])
         return JsonResponse(serializer.data, safe=False)
-
+def placeList(request):
+    if request.method == 'GET':
+        places = Place.objects.all()
+        serializer = PlaceSerializer(places, many=True)
+        return JsonResponse(serializer.data, safe=False)
 def download(request, path):
     file_path = os.path.join(settings.MEDIA_ROOT, path)
     if os.path.exists(file_path):

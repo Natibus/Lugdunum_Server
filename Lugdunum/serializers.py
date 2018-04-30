@@ -11,16 +11,14 @@ class PlaceSerializer(serializers.ModelSerializer):
         fields = ('description', 'latitude', 'longitude')
 
 class ImageSerializer(serializers.ModelSerializer):
-    image=Base64ImageField()
     class Meta:
         model=Image
         fields=[field.name for field in Image._meta.get_fields()]
 
 class OldPhotoSerializer(serializers.ModelSerializer):
-    image=Base64ImageField()
     class Meta:
         model=OldPhoto
-        fields=[field.name for field in OldPhoto._meta.get_fields()]
+        fields=('name', 'format', 'image', 'pk')
 class RecentPhotoSerializer(serializers.ModelSerializer):
     
     class Meta:

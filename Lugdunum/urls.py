@@ -5,5 +5,6 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('photoList',views.photoList)
+    url(r'^photoList/([0-9]+)/$', views.photoList),
+    url(r'^places/$', views.placeList)
 ]
