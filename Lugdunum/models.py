@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from Lugdunum_Server.settings import MEDIA_URL
 
 class Place(models.Model):
     description = models.TextField(null=True)
@@ -8,7 +9,7 @@ class Place(models.Model):
     longitude = models.FloatField(default=0)
     
 class OldPhoto(models.Model):
-    image = models.ImageField(upload_to=settings.MEDIA_ROOT, blank = True)
+    image = models.ImageField(upload_to = MEDIA_URL, blank = True)
     name = models.TextField(default="default_name")
     format = models.TextField(default="unknown")
     date = models.TextField(default="unknown")
@@ -21,7 +22,7 @@ class OldPhoto(models.Model):
         )
 
 class RecentPhoto(models.Model):
-    image = models.ImageField(upload_to=settings.MEDIA_ROOT, blank = True)
+    image = models.ImageField(blank = True)
     name = models.TextField(default="default_name")
     format = models.TextField(default="unknown")
     date = models.DateTimeField(blank=True, default=timezone.now())
@@ -34,6 +35,6 @@ class RecentPhoto(models.Model):
         )
 
 class Image(models.Model):
-    image = models.ImageField(upload_to=settings.MEDIA_ROOT, blank = True)
+    image = models.ImageField(blank = True)
     name = models.TextField(default="default_name")
     format = models.TextField(default="unknown")

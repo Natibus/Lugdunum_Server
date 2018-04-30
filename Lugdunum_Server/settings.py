@@ -25,7 +25,7 @@ SECRET_KEY = '2)hc7yvi(cl9@cma+!#^(-&4m0&b=xmk^wabyc)l!)pp9ecnfm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.43.0.163', 'localhost','dc48daad.ngrok.io']
+ALLOWED_HOSTS = ['*']
 
 # APPEND_SLASH = False
 # Application definition
@@ -109,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'UTC'
 
@@ -124,8 +124,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/home/lugdunum/Lugdunum_Server/static'
 
-MEDIA_ROOT = 'media/'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = '/home/lugdunum/Lugdunum_Server/'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
