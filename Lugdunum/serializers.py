@@ -1,4 +1,4 @@
-from Lugdunum.models import Place, RecentPhoto, Image, OldPhoto
+from Lugdunum.models import Place, RecentPhoto, OldPhoto
 from rest_framework import serializers
 from django.db import models
 from drf_extra_fields.fields import Base64ImageField
@@ -8,21 +8,14 @@ from drf_extra_fields.fields import Base64ImageField
 class PlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
-        fields = ('description', 'latitude', 'longitude')
-
-class ImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Image
-        fields=[field.name for field in Image._meta.get_fields()]
+        fields = ('id', 'description', 'latitude', 'longitude')
 
 class OldPhotoSerializer(serializers.ModelSerializer):
     class Meta:
-        model=OldPhoto
-        fields=('name', 'format', 'image', 'pk')
+        model = OldPhoto
+        fields= [field.name for field in OldPhoto._meta.get_fields()]
+
 class RecentPhotoSerializer(serializers.ModelSerializer):
-    
     class Meta:
-        # name = models.TextField()
         model = RecentPhoto
-        name = models.TextField()
-        fields = ('name',)
+        fields = [field.name for field in RecentPhoto._meta.get_fields()]
