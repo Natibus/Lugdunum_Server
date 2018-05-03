@@ -6,17 +6,22 @@ from django.core.files import File
 from django.dispatch import receiver
 import os
 import base64
+
+
 class Place(models.Model):
     description = models.TextField(default="no_description")
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
+
     @classmethod
     def create(cls, latitude, longitude, description):
-        place = cls(latitude = latitude, longitude=longitude, description=description)
+        place = cls(latitude=latitude, longitude=longitude,
+                    description=description)
         return place
 
+
 class OldPhoto(models.Model):
-    image = models.FileField(upload_to = MEDIA_URL, blank = True)
+    image = models.FileField(upload_to='', blank=True)
     name = models.TextField(default="default_name")
     format = models.TextField(default="unknown")
     date = models.TextField(default="unknown")
@@ -26,7 +31,8 @@ class OldPhoto(models.Model):
         Place,
         on_delete=models.CASCADE,
         null=True
-        )
+    )
+
     @classmethod
     def create(cls, name, description, date, infoLink, file_string, place):
         oldphoto = cls(
@@ -36,20 +42,28 @@ class OldPhoto(models.Model):
             infoLink=infoLink,
             place=place
         )
-        f = open(os.path.join(settings.MEDIA_ROOT,MEDIA_URL,name), 'wb+')
+        f = open(os.path.join(settings.MEDIA_ROOT, MEDIA_URL, name), 'wb+')
         myfile = File(f)
         img = base64.b64decode(file_string)
         myfile.write(img)
-        oldphoto.image.save(name, myfile, save=False)
+        try:
+            oldphoto.image.save(os.path.join(
+                MEDIA_URL, name), myfile, save=False)
+        except:
+            raise ValueError("can't save old photo :'(",
+                             os.path.join(MEDIA_URL, name))
         return oldphoto
+
 
 @receiver(models.signals.post_delete, sender=OldPhoto)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
     if instance.image:
         if os.path.isfile(instance.image.path):
             os.remove(instance.image.path)
+
+
 class RecentPhoto(models.Model):
-    image = models.FileField(upload_to = MEDIA_URL, blank = True)
+    image = models.FileField(upload_to='', blank=True)
     name = models.TextField(default="default_name")
     format = models.TextField(default="unknown")
     date = models.DateTimeField(blank=True, default=timezone.now())
@@ -59,4 +73,29 @@ class RecentPhoto(models.Model):
         Place,
         on_delete=models.CASCADE,
         null=True
+    )
+
+    @classmethod
+    def create(cls, name, file_string, place):
+        recentPhoto = cls(
+            name=name,
+            place=place
         )
+        f = open(os.path.join(settings.MEDIA_ROOT, MEDIA_URL, name), 'wb+')
+        myfile = File(f)
+        img = base64.b64decode(file_string)
+        myfile.write(img)
+        try:
+            recentPhoto.image.save(os.path.join(
+                MEDIA_URL, name), myfile, save=False)
+        except:
+            raise ValueError("can't save recent photo :'(",
+                             os.path.join(MEDIA_URL, name))
+        return recentPhoto
+
+
+@receiver(models.signals.post_delete, sender=RecentPhoto)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)

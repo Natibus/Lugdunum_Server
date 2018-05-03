@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^voteUpload/([0-9]+)/$', views.voteUpload),
     url(r'^recentPhotoList/([0-9]+)/$', views.recentPhotoList),
     url(r'^photoUpload/$', views.photoUpload),
+    url(r'^recentPhotoUpload/([0-9]+)/$', views.recentPhotoUpload),
     url(r'^places/([0-9]+)/$', views.placeList),
     url(r'^places/$', views.placeList)
 ]
